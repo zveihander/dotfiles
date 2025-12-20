@@ -1,0 +1,10 @@
+[user]
+	email = lwq7e50ygv8f1w@tuta.com
+	name = Evan Alvarez
+	signingkey = /home/evan/.ssh/id_github-zveihander.pub
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true

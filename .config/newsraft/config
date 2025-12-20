@@ -1,0 +1,5 @@
+bind o exec firefox "%l"
+
+bind i exec swayimg "%l"
+
+bind m exec mpv "%l"
