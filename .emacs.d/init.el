@@ -249,11 +249,16 @@
 
   :config
   (when (file-directory-p "~/Code")
-    (setq project-switch-commands
-          '((project-find-file "Find file")
-            (project-dired "Dired")
-            (consult-ripgrep "Ripgrep")
-            (magit-project-status "Magit"))))
+    (dolist (dir (directory-files "~/Code" t "^[^.]"))
+      (when (and (file-directory-p dir)
+                 (or (file-exists-p (expand-file-name ".git" dir))
+                     (file-exists-p (expand-file-name ".projectile" dir))))
+        (project-remember-project (project-current nil dir)))))
+  (setq project-switch-commands
+        '((project-find-file "Find file")
+          (project-dired "Dired")
+          (consult-ripgrep "Ripgrep")
+          (magit-project-status "Magit")))
   :bind (
          ("C-c p p" . project-switch-project)
          ("C-c p f" . project-find-file)
@@ -336,7 +341,10 @@
          (sh-mode . eglot-ensure)
          (markdown-mode . eglot-ensure)
          (typst-ts-mode . eglot-ensure)
-         (python-mode . eglot-ensure))
+         (python-mode . eglot-ensure)
+         (typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure)
+         (svelte-mode . eglot-ensure))
   :config
   (add-hook 'before-save-hook
             (lambda ()
@@ -356,10 +364,15 @@
 
   (add-to-list 'eglot-server-programs
                '(markdown-mode . ("marksman")))
-  (add-hook 'markdown-mode-hook #'eglot-ensure)
 
   (add-to-list 'eglot-server-programs
                '(python-mode . ("rass" "python")))
+
+  (add-to-list 'eglot-server-programs
+               '((typescript-ts-mode, tsx-ts-mode) . ("rass" "typescript")))
+
+  (add-to-list 'eglot-server-programs
+               '(svelte-mode . ("rass" "svelte")))
 
   (setq eglot-events-buffer-size 0)
   (setq eglot-sync-connect 0)
@@ -412,6 +425,20 @@
 (use-package move-text
   :config
   (move-text-default-bindings))
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1)
+  (setq yas-snippet-dirs
+        '("~/.emacs.d/snippets"))
+  :bind (("C-c y n" . yas-new-snippet)
+         ("C-c y v" . yas-visit-snippet-file)))
+
+
+(use-package avy
+  :config
+  (setq avy-background t)
+  :bind (("M-j" . avy-goto-char-timer)))
 
 (use-package org
   :bind (("C-c a" . org-agenda)
@@ -725,12 +752,41 @@
             (setq sh-basic-offset 2
                   sh-indentation 2)))
 
+;; Python
 (use-package python
   :ensure nil
   :mode ("\\.py\\'" . python-mode)
   :config
   (setq python-indent-offset 4)
   (setq python-shell-interpreter "python3"))
+
+;; TypeScript
+(use-package typescript-ts-mode
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode))
+  :config
+  (setq typescript-ts-mode-indent-offset 2))
+
+;; Svelte
+(use-package svelte-mode
+  :mode "\\.svelte\\'"
+  :config
+  (setq svelte-basic-offset 2))
+
+;; JSON
+(use-package json-mode
+  :mode "\\.json\\'")
+
+;; Prettier
+(use-package prettier-js
+  :hook ((typescript-mode . prettier-js-mode)
+         (svelte-mode . prettier-js-mode))
+  :config
+  (setq prettier-js-args '("--plugin" "prettier-plugin-svelte"
+                           "--trailing-comma" "es5"
+                           "--single-quote" "true"
+                           "--print-width" "100"
+                           "--tab-width" "2")))
 
 ;; Treesitter
 
@@ -744,7 +800,10 @@
         (json "https://github.com/tree-sitter/tree-sitter-json")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (typst "https://github.com/uben0/tree-sitter-typst")
-        (python "https://github.com/tree-sitter/tree-sitter-python")))
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")))
 
 ;; Auto-install missing tree-sitter parsers
 
@@ -754,7 +813,7 @@
   (let ((missing-grammars
          (seq-filter (lambda (lang)
                        (not (treesit-language-available-p lang)))
-                     '(bash c cpp rust toml markdown json yaml typst python))))
+                     '(bash c cpp rust toml markdown json yaml typst python typescript tsx javascript))))
     (when missing-grammars
       (dolist (lang missing-grammars)
         (message "Installing tree-sitter grammar for %s..." lang)
@@ -811,9 +870,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(cape consult corfu gruvbox-theme magit markdown-mode move-text
-          multiple-cursors org-cliplink org-modern org-roam-ui rust-mode
-          typst-ts-mode))
+   '(avy cape consult corfu gruvbox-theme json-mode magit markdown-mode move-text
+         multiple-cursors org-cliplink org-modern org-roam-ui prettier-js
+         rust-mode svelte-mode typst-ts-mode yasnippet))
  '(package-vc-selected-packages
    '((eglot-booster :vc-backend Git :url
                     "https://github.com/jdtsmith/eglot-booster")

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: +page.ts load
+# key: pload
+# --
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = async ({ ${1:params, fetch} }) => {
+	$0
+	return {
+		${2:data}
+	};
+};
