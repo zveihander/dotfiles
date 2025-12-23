@@ -436,9 +436,12 @@
 
 
 (use-package avy
+  :bind (("C-;" . avy-goto-char-timer)
+         :map isearch-mode-map
+         ("C-'" . avy-isearch))
   :config
   (setq avy-background t)
-  :bind (("M-j" . avy-goto-char-timer)))
+  (setq avy-timeout-seconds 0.8))
 
 (use-package org
   :bind (("C-c a" . org-agenda)
