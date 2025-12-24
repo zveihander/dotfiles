@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Emacs (client)
+GenericName=Text Editor
+Comment=The GNU Emacs editing environment
+Exec=emacsclient -c %F
+Terminal=false
+Type=Application
+Icon=emacs
+Categories=Development;TextEditor;
+MimeType=text/plain;text/x-csrc;text/x-chdr;text/x-python;application/x-shellscript;

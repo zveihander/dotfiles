@@ -1,0 +1,3 @@
++ ! t t
+o       Open with xdg-open
+        xdg-open "%f"

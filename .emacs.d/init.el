@@ -142,9 +142,13 @@
                   (start-process "external-app" nil "xdg-open" file)))))
 
 
-;; Enable multi-line commenting which ensures that `comment-indent-new-line'
+;; Enable multi-line commenting which ensures that `comment-indent-new-line`
 ;; properly continues comments onto new lines.
 (setq comment-multi-line t)
+
+;; Enable hl-line-mode so you can see where your cursor is
+(setq global-hl-line-mode t)
+(setq hl-line-mode t)
 
 ;; Ensures that empty lines within the commented region are also commented out.
 ;; This prevents unintended visual gaps and maintains a consistent appearance.
@@ -286,8 +290,6 @@
   :bind (:map icomplete-minibuffer-map
               ("C-n" . icomplete-forward-completions)
               ("C-p" . icomplete-backward-completions)
-              ("<down>" . icomplete-forward-completions)
-              ("<up>" . icomplete-backward-completions)
               ("TAB" . icomplete-force-complete-and-exit)
               ("RET" . exit-minibuffer)))
 
@@ -433,15 +435,6 @@
         '("~/.emacs.d/snippets"))
   :bind (("C-c y n" . yas-new-snippet)
          ("C-c y v" . yas-visit-snippet-file)))
-
-
-(use-package avy
-  :bind (("C-;" . avy-goto-char-timer)
-         :map isearch-mode-map
-         ("C-'" . avy-isearch))
-  :config
-  (setq avy-background t)
-  (setq avy-timeout-seconds 0.8))
 
 (use-package org
   :bind (("C-c a" . org-agenda)
@@ -828,6 +821,15 @@
 
 ;; Keybindings
 
+;; Disabled arrow keys for habit building
+(bind-key* "<up>" 'ignore)
+(bind-key* "<down>" 'ignore)
+(bind-key* "<left>" 'ignore)
+(bind-key* "<right>" 'ignore)
+
+(global-set-key (kbd "M-p") #'backward-paragraph)
+(global-set-key (kbd "M-n") #'forward-paragraph)
+
 (global-set-key (kbd "C-c n u") #'org-roam-ui-mode)
 
 (global-set-key (kbd "C-x t t") 'tab-bar-new-tab)
@@ -850,6 +852,18 @@
 
 (global-set-key (kbd "C-,") 'rc/duplicate-line)
 
+(defun rc/mark-line ()
+  "Mark the current line."
+  (interactive)
+  (if (and (region-active-p)
+           (eq last-command 'rc/mark-line))
+      (forward-line 1)
+    (beginning-of-line)
+    (set-mark (point))
+    (forward-line 1)))
+
+(global-set-key (kbd "C-S-l") #'rc/mark-line)
+
 (defun rc/consult-org-roam-search ()
   "Search org-roam directory using consult-ripgrep."
   (interactive)
@@ -866,6 +880,7 @@
 
 (global-set-key (kbd "C-c n I") #'org-roam-node-insert-immediate)
 
+
 ;; Custom
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -873,9 +888,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(avy cape consult corfu gruvbox-theme json-mode magit markdown-mode move-text
-         multiple-cursors org-cliplink org-modern org-roam-ui prettier-js
-         rust-mode svelte-mode typst-ts-mode yasnippet))
+   '(cape consult corfu gruvbox-theme json-mode magit markdown-mode move-text
+          multiple-cursors org-cliplink org-modern org-roam-ui prettier-js
+          rust-mode svelte-mode typst-ts-mode yasnippet))
  '(package-vc-selected-packages
    '((eglot-booster :vc-backend Git :url
                     "https://github.com/jdtsmith/eglot-booster")

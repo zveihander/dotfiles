@@ -3,6 +3,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Env vars
+export EDITOR="emacsclient -c"
+export VISUAL="emacsclient -c"
+
 # Tab completion-ish
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
