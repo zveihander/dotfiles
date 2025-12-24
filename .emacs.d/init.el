@@ -428,14 +428,6 @@
   :config
   (move-text-default-bindings))
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1)
-  (setq yas-snippet-dirs
-        '("~/.emacs.d/snippets"))
-  :bind (("C-c y n" . yas-new-snippet)
-         ("C-c y v" . yas-visit-snippet-file)))
-
 (use-package org
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
@@ -890,7 +882,7 @@
  '(package-selected-packages
    '(cape consult corfu gruvbox-theme json-mode magit markdown-mode move-text
           multiple-cursors org-cliplink org-modern org-roam-ui prettier-js
-          rust-mode svelte-mode typst-ts-mode yasnippet))
+          rust-mode svelte-mode typst-ts-mode))
  '(package-vc-selected-packages
    '((eglot-booster :vc-backend Git :url
                     "https://github.com/jdtsmith/eglot-booster")

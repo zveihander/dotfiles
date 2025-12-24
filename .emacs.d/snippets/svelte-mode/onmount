@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: onMount
-# key: onm
-# --
-import { onMount } from 'svelte';
-
-onMount(() => {
-	$0
-});

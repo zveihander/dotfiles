@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: if-else block
-# key: #ife
-# --
-{#if ${1:condition}}
-	$2
-{:else}
-	$0
-{/if}

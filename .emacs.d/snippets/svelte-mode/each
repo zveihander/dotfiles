@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: each block
-# key: #each
-# --
-{#each ${1:items} as ${2:item}}
-	$0
-{/each}
