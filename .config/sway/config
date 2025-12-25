@@ -23,7 +23,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term ghostty
+set $term footclient
 # Your preferred application launcher
 
 set $menu 'wmenu-run -i -N 000000 -f "MonoLisa 13"'
@@ -286,6 +286,8 @@ hide_edge_borders both
 #
 
 exec pipewire
+
+exec foot --server
 
 exec emacs --daemon
 

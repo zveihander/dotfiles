@@ -14,8 +14,6 @@ set incfilter true
 set tabstop 4
 set info size:time
 set dircounts true
-set period 1
-set autoquit true
 
 ### emacs keybindings
 
