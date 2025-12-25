@@ -126,9 +126,6 @@
 ;; Refresh dired buffers automatically
 (setq dired-auto-revert-buffer t)
 
-;; Use ImageMagick
-(setq image-use-external-converter t)
-
 ;; Spell checking with Flyspell
 (dolist (hook '(text-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1))))
@@ -170,7 +167,7 @@
 
 ;; Dired stuff
 (setq dired-free-space nil
-      dired-dwim-target t  ; Propose a target for intelligent moving/copying
+      dired-dwim-target t
       dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
       dired-recursive-deletes 'top
@@ -412,7 +409,9 @@
          ("C-<" . 'mc/mark-previous-like-this)
          ("C-c C-<" . 'mc/mark-all-like-this)
          ("C-\"" . 'mc/skip-to-next-like-this)
-         ("C-:" . 'mc/skip-to-previous-like-this)))
+         ("C-:" . 'mc/skip-to-previous-like-this)
+         ("C-c m u"     . mc/unmark-next-like-this)
+         ("C-c m U"     . mc/unmark-previous-like-this)))
 
 (defun indent-region-advice (&rest ignored)
   (let ((deactivate deactivate-mark))
