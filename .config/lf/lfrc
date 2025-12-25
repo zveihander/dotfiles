@@ -1,0 +1,134 @@
+### options
+
+set shell bash
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 10
+set drawbox true
+set ignorecase true
+set smartcase true
+set anchorfind true
+set findlen 2
+set incsearch true
+set incfilter true
+set tabstop 4
+set info size:time
+set dircounts true
+set period 1
+set autoquit true
+
+### emacs keybindings
+
+map <c-n> down
+map <c-p> up
+map <c-f> open
+map <c-b> updir
+map <c-v> page-down
+map <a-v> page-up
+map <a-lt> top
+map <a-gt> bottom
+map <c-a> top
+map <c-e> bottom
+
+map <c-g> clear
+map <esc> clear
+map <c-x><c-c> quit
+
+map <c-s> search
+map <c-r> search-back
+map <c-s> search-next
+map <c-r> search-prev
+
+map <c-space> toggle
+map <c-@> toggle
+map <a-w> copy
+map <c-w> cut
+map <c-y> paste
+map <c-_> clear
+
+map <c-x><c-f> push :cd<space>
+map <c-x><c-s> rename
+map <c-x><c-w> rename
+map <c-x>d reload
+map <c-x>k delete
+map <a-x> read
+
+map <c-x>b push :cd<space>
+map <c-x><c-b> mark-load
+map <a-n> jump-next
+map <a-p> jump-prev
+
+map <c-h>k maps
+map <c-h>? maps
+map <c-h>b maps
+map <c-h>m maps
+
+map <c-l> redraw
+
+map <a-!> shell
+map <a-&> &$SHELL
+map <c-x><c-e> $$EDITOR "$f"
+
+map <c-d> delete
+map <c-x><c-d> delete
+map <c-k> cut
+map <c-o> push %touch<space>
+map <c-x><c-n> push %touch<space>
+
+cmd terminal &{{
+    $TERMINAL &
+}}
+map <a-t> terminal
+
+cmd mkdir %mkdir -p "$@"
+map <a-d> push :mkdir<space>
+map + push :mkdir<space>
+
+cmd select-all :unselect; invert
+map <c-x>h select-all
+
+map <c-x>= %file "$f"
+
+map <enter> open
+map <backspace> updir
+map <tab> :toggle;down
+
+### commands
+
+cmd extract ${{
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.tar.zst) tar --zstd -xvf $f;;
+        *.tar) tar xvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+        *.gz) gunzip $f;;
+        *.bz2) bunzip2 $f;;
+        *.xz) unxz $f;;
+        *.zst) unzstd $f;;
+        *) echo "Unsupported format" ;;
+    esac
+}}
+
+cmd compress ${{
+    set -f
+    printf "Archive name (with extension): "
+    read name
+    case $name in
+        *.tar.gz|*.tgz) tar czvf "$name" $fx;;
+        *.tar.bz2|*.tbz2) tar cjvf "$name" $fx;;
+        *.tar.xz|*.txz) tar cJvf "$name" $fx;;
+        *.tar.zst) tar --zstd -cvf "$name" $fx;;
+        *.tar) tar cvf "$name" $fx;;
+        *.zip) zip -r "$name" $fx;;
+        *.7z) 7z a "$name" $fx;;
+        *) echo "Unsupported format";;
+    esac
+}}
+
+map ax extract
+map ac compress

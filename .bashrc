@@ -4,6 +4,7 @@
 [[ $- != *i* ]] && return
 
 # Env vars
+export TERMINAL="ghostty -e"
 export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c"
 
