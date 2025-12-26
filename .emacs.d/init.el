@@ -1,18 +1,15 @@
 ;; Performance
 
+;; I read somewhere that this is beneficial
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 ;; Reset GC threshold after startup
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold (* 16 1024 1024)
-                  gc-cons-percentage 0.1)))
-
-;; Reduce frequency of GC during minibuffer use
-(add-hook 'minibuffer-setup-hook (lambda () (setq gc-cons-threshold most-positive-fixnum)))
-(add-hook 'minibuffer-exit-hook (lambda () (setq gc-cons-threshold (* 16 1024 1024))))
-
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq file-name-handler-alist file-name-handler-alist-original)))
+            (setq gc-cons-threshold (* 32 1024 1024)
+                  gc-cons-percentage 0.15)))
 
 ;; Options
 
@@ -50,25 +47,12 @@
 (setq create-lockfiles nil)
 (setq make-backup-files nil)
 
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backup" user-emacs-directory))))
-(setq tramp-backup-directory-alist backup-directory-alist)
-(setq backup-by-copying-when-linked t)
-(setq backup-by-copying t)  ; Backup by copying rather renaming
-(setq delete-old-versions t)  ; Delete excess backup versions silently
-(setq version-control t)  ; Use version numbers for backup files
-(setq kept-new-versions 5)
-(setq kept-old-versions 5)
-
 ;; Line numbers configuration
 (setq display-line-numbers-type 'relative)
 (setq display-line-numbers-width-start t)
 (global-display-line-numbers-mode 1)
-(dolist (mode '(org-mode-hook
-                term-mode-hook
-                shell-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+(dolist (hook '(org-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook))
+  (add-hook hook #'display-line-numbers-mode -1))
 
 ;; Better scrolling
 (setq scroll-conservatively 101)
@@ -89,7 +73,6 @@
 
 ;; Indent first, then complete on subsequent TABs
 (setq tab-always-indent 'complete)
-(setq tab-first-completion 'word-or-paren-or-punct)
 
 ;; Wrapping and fill columns
 (setq-default word-wrap t)
@@ -139,20 +122,9 @@
                   (start-process "external-app" nil "xdg-open" file)))))
 
 
-;; Enable multi-line commenting which ensures that `comment-indent-new-line`
-;; properly continues comments onto new lines.
-(setq comment-multi-line t)
-
 ;; Enable hl-line-mode so you can see where your cursor is
 (setq global-hl-line-mode t)
 (setq hl-line-mode t)
-
-;; Ensures that empty lines within the commented region are also commented out.
-;; This prevents unintended visual gaps and maintains a consistent appearance.
-(setq comment-empty-lines t)
-
-;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
-(setq sentence-end-double-space nil)
 
 ;; Eliminate delay before highlighting search matches
 (setq lazy-highlight-initial-delay 0)
@@ -279,7 +251,6 @@
 
   (icomplete-compute-delay 0)
 
-  (completion-styles '(flex basic))
   (completion-category-overrides '((file (styles basic partial-completion))))
 
   (completions-format 'one-column)
@@ -315,6 +286,8 @@
   (consult-preview-key 'any)
   (consult-narrow-key "<")
   :config
+  (setq orderless-style-dispatchers
+        '(+orderless-consult-dispatch orderless-affix-dispatch))
   (setq consult-project-function #'consult--default-project-function)
 
   (defun consult-project-switch-project ()
@@ -356,7 +329,9 @@
                                       "--clang-tidy"
                                       "--completion-style=detailed"
                                       "--header-insertion=iwyu"
-                                      "--header-insertion-decorators")))
+                                      "--function-arg-placeholders=0"
+                                      "--pch-storage=memory"
+                                      "--j=6")))
 
   (add-to-list 'eglot-server-programs
                '(typst-ts-mode . ("tinymist")))
@@ -373,7 +348,7 @@
   (add-to-list 'eglot-server-programs
                '(svelte-mode . ("rass" "svelte")))
 
-  (setq eglot-events-buffer-size 0)
+  (setq eglot-events-buffer-size 250)
   (setq eglot-sync-connect 0)
   (setq eglot-autoshutdown t)
   (setq jsonrpc-event-hook nil)
@@ -381,18 +356,25 @@
 
 (use-package corfu
   :init
-  (global-corfu-mode)
+  (global-corfu-mode 1)
   :custom
   (corfu-auto t)
-  (corfu-auto-delay 0)
+  (corfu-auto-delay 0.05)
   (corfu-auto-prefix 2)
-  (corfu--preview-current 'insert)
+  (corfu-preselect-first nil)
+  (corfu-on-exact-match nil)
   (corfu-cycle t)
+  (corfu-popupinfo-mode 1)
+  (corfu-echo-mode 1)
   :bind (:map corfu-map
               ("TAB" . corfu-next)
               ([tab] . corfu-next)
               ("S-TAB" . corfu-previous)
-              ([backtab] . corfu-previous)))
+              ([backtab] . corfu-previous)
+              ("C-n"    . corfu-next)
+              ("C-p"    . corfu-previous)
+              ("M-p"    . corfu-popupinfo-scroll-down)
+              ("M-n"    . corfu-popupinfo-scroll-up)))
 
 (use-package cape
   :init
@@ -401,6 +383,19 @@
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   (setq-default eglot-workspace-configuration
                 '((python (maxCompletions . 200)))))
+
+(setq completion-category-overrides
+      '((file (styles basic partial-completion))))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides
+   '((file (styles . (partial-completion)))))
+  (completion-pcm-leading-wildcard t)
+
+  (orderless-style-dispatchers '(orderless-affix-dispatch))
+  (orderless-component-separator #'orderless-escapable-split-on-space))
 
 (use-package multiple-cursors
   :bind (
@@ -424,8 +419,10 @@
 (advice-add 'move-text-down :after 'indent-region-advice)
 
 (use-package move-text
-  :config
-  (move-text-default-bindings))
+  :bind(
+        ("M-P" . move-text-up)
+        ("M-N" . move-text-down))
+  )
 
 (use-package yasnippet
   :config
@@ -643,7 +640,8 @@
 
 (use-package org-roam
   :after org
-  :demand t
+  :defer
+  :commands (org-roam-node-find org-roam-capture org-roam-db-sync)
   :bind (("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n l" . org-roam-buffer-toggle)
@@ -816,15 +814,22 @@
 
 (when (and (treesit-available-p)
            (not (treesit-language-available-p 'rust)))
-  (rc/install-treesit-grammars))
+  (run-with-idle-timer 120 nil #'rc/install-treesit-grammars))
 
 ;; Keybindings
 
 ;; Disabled arrow keys for habit building
 (bind-key* "<up>" 'ignore)
-(bind-key* "<down>" 'ignore)
+(bind-key* "<d1own>" 'ignore)
 (bind-key* "<left>" 'ignore)
 (bind-key* "<right>" 'ignore)
+
+(global-set-key (kbd "C-c e r") #'eglot-rename)
+(global-set-key (kbd "C-c e a") #'eglot-code-actions)
+(global-set-key (kbd "C-c e e") #'flymake-goto-next-error)
+(global-set-key (kbd "C-c e E") #'flymake-goto-next-error)
+
+(global-set-key (kbd "C-c d c") #'compile)
 
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
@@ -879,6 +884,26 @@
 
 (global-set-key (kbd "C-c n I") #'org-roam-node-insert-immediate)
 
+(defun rc/indent-right-or-region ()
+  "Indent right — current line or region."
+  (interactive)
+  (let ((beg (if (use-region-p) (region-beginning) (line-beginning-position)))
+        (end (if (use-region-p) (region-end)       (line-end-position))))
+    (indent-rigidly beg end tab-width)
+    (when (use-region-p)
+      (setq deactivate-mark nil))))
+
+(defun rc/indent-left-or-region ()
+  "Indent left — current line or region."
+  (interactive)
+  (let ((beg (if (use-region-p) (region-beginning) (line-beginning-position)))
+        (end (if (use-region-p) (region-end)       (line-end-position))))
+    (indent-rigidly beg end (- tab-width))
+    (when (use-region-p)
+      (setq deactivate-mark nil))))
+
+(global-set-key (kbd "C-c >") #'rc/indent-right-or-region)
+(global-set-key (kbd "C-c <") #'rc/indent-left-or-region)
 
 ;; Custom
 (custom-set-variables
@@ -888,8 +913,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(cape consult corfu gruvbox-theme json-mode magit markdown-mode move-text
-          multiple-cursors org-cliplink org-modern org-roam-ui prettier-js
-          rust-mode svelte-mode typst-ts-mode yasnippet))
+          multiple-cursors orderless org-cliplink org-modern org-roam-ui
+          prettier-js rust-mode svelte-mode typst-ts-mode yasnippet))
  '(package-vc-selected-packages
    '((typst-ts-mode :url "https://codeberg.org/meow_king/typst-ts-mode.git"))))
 (custom-set-faces
