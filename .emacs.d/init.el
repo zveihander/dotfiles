@@ -580,61 +580,6 @@
 
 (global-set-key (kbd "C-c n C") #'org-insert-contact-link)
 
-(use-package org-modern
-  :hook
-  (org-mode . org-modern-mode)
-  (org-agenda-finalize . org-modern-agenda)
-
-  :custom
-  (org-modern-star 'replace)
-  (org-modern-replace-stars '("◉" "○" "✸" "✿" "✤"))
-  (org-modern-hide-stars t)
-
-  (org-modern-todo nil)
-  (org-modern-todo-faces
-   '(("TODO" :background "#fb4934" :foreground "black" :weight bold)
-     ("WAITING" :background "#fabd2f" :foreground "black" :weight bold)
-     ("DONE" :background "#b8bb26" :foreground "black" :weight bold)
-     ("CANCELLED" :background "#938374" :foreground "black" :weight bold)))
-
-  (org-modern-priority nil)
-  (org-modern-priority-faces
-   '((?A :background "#fb4934" :foreground "black" :weight bold)
-     (?B :background "#fabd2f" :foreground "black" :weight bold)
-     (?C :background "#d3869b" :foreground "black" :weight bold)))
-
-  (org-modern-tag nil)
-  (org-modern-tag-faces nil)
-
-  (org-modern-timestamp nil)
-  (org-modern-datetime-format
-   '((date . "%b %d, %Y") (time . "%H:%M")))
-
-  (org-modern-table nil)
-  (org-modern-table-vertical 1)
-  (org-modern-table-horizontal 0.2)
-
-  (org-modern-list nil)
-
-  (org-modern-checkbox nil)
-
-  (org-modern-block-fringe nil)
-  (org-modern-block-name nil)
-
-  (org-modern-horizontal-rule nil)
-
-  (org-modern-progress nil)
-
-  (org-modern-keyword t)
-
-  (org-modern-statistics nil)
-
-  (org-modern-footnote nil)
-
-  (org-modern-internal-target nil)
-
-  (org-modern-radio-target nil))
-
 (use-package org-cliplink
   :bind ("C-c C-l" . org-cliplink))
 
@@ -913,8 +858,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(cape consult corfu gruvbox-theme json-mode magit markdown-mode move-text
-          multiple-cursors orderless org-cliplink org-modern org-roam-ui
-          prettier-js rust-mode svelte-mode typst-ts-mode yasnippet))
+          multiple-cursors orderless org-cliplink org-roam-ui prettier-js
+          rust-mode svelte-mode typst-ts-mode yasnippet))
  '(package-vc-selected-packages
    '((typst-ts-mode :url "https://codeberg.org/meow_king/typst-ts-mode.git"))))
 (custom-set-faces
