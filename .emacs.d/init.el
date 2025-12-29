@@ -847,8 +847,8 @@
     (when (use-region-p)
       (setq deactivate-mark nil))))
 
-(global-set-key (kbd "C-c >") #'rc/indent-right-or-region)
-(global-set-key (kbd "C-c <") #'rc/indent-left-or-region)
+(global-set-key (kbd "C->") #'rc/indent-right-or-region)
+(global-set-key (kbd "C-<") #'rc/indent-left-or-region)
 
 ;; Custom
 (custom-set-variables
