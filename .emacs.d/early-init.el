@@ -22,7 +22,7 @@
   (setq native-comp-async-report-warnings-errors nil
         native-comp-warning-on-missing-source nil)
 
-  (setq native-comp-deferred-compilation t))
+  (setq native-comp-jit-compilation t))
 
 (setq inhibit-compacting-font-caches t)
 

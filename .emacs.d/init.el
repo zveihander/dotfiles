@@ -8,7 +8,7 @@
 ;; Reset GC threshold after startup
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold (* 32 1024 1024)
+            (setq gc-cons-threshold (* 100 1024 1024)
                   gc-cons-percentage 0.15)))
 
 ;; Options
@@ -168,6 +168,13 @@
 (setq use-package-always-ensure t)
 (setq package-vc-allow-build-commands t)
 
+(setq package-check-signature nil)
+(setq package-install-upgrade-built-in t)
+
+(setq package-quickstart t)
+(setq package-quickstart-file
+      (expand-file-name "package-quickstart.el" user-emacs-directory))
+
 (use-package gruvbox-theme
   :config
   (load-theme 'gruvbox-dark-medium t))
@@ -300,6 +307,7 @@
   (global-set-key (kbd "C-c p p") #'consult-project-switch-project))
 
 (use-package magit
+  :defer t
   :bind ("C-x g" . magit-status)
   :config
   (setq magit-display-buffer-function
@@ -398,6 +406,7 @@
   (orderless-component-separator #'orderless-escapable-split-on-space))
 
 (use-package multiple-cursors
+  :defer t
   :bind (
          ("C-S-c C-S-c" . 'mc/edit-lines)
          ("C->" . 'mc/mark-next-like-this)
@@ -419,12 +428,14 @@
 (advice-add 'move-text-down :after 'indent-region-advice)
 
 (use-package move-text
+  :defer t
   :bind(
         ("M-P" . move-text-up)
         ("M-N" . move-text-down))
   )
 
 (use-package yasnippet
+  :defer t
   :config
   (yas-global-mode 1)
   (setq yas-snippet-dirs
@@ -581,11 +592,12 @@
 (global-set-key (kbd "C-c n C") #'org-insert-contact-link)
 
 (use-package org-cliplink
+  :defer t
   :bind ("C-c C-l" . org-cliplink))
 
 (use-package org-roam
+  :defer t
   :after org
-  :defer
   :commands (org-roam-node-find org-roam-capture org-roam-db-sync)
   :bind (("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
@@ -639,6 +651,7 @@
   (org-roam-db-autosync-mode))
 
 (use-package org-roam-ui
+  :defer t
   :after org-roam
   :config
   (setq org-roam-ui-sync-theme t
@@ -667,10 +680,12 @@
 
 ;; Rust
 (use-package rust-mode
+  :defer t
   :mode "\\.rs\\'")
 
 ;; Markdown
 (use-package markdown-mode
+  :defer t
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :config
@@ -680,6 +695,7 @@
 ;; Typst
 (use-package typst-ts-mode
   :vc (:url "https://codeberg.org/meow_king/typst-ts-mode.git")
+  :defer t
   :mode "\\.typ\\'"
   :config
   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
@@ -692,6 +708,7 @@
 
 ;; Python
 (use-package python
+  :defer t
   :ensure nil
   :mode ("\\.py\\'" . python-mode)
   :config
@@ -700,6 +717,7 @@
 
 ;; TypeScript
 (use-package typescript-ts-mode
+  :defer t
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode))
   :config
@@ -707,16 +725,19 @@
 
 ;; Svelte
 (use-package svelte-mode
+  :defer t
   :mode "\\.svelte\\'"
   :config
   (setq svelte-basic-offset 2))
 
 ;; JSON
 (use-package json-mode
+  :defer t
   :mode "\\.json\\'")
 
 ;; Prettier
 (use-package prettier-js
+  :defer t
   :hook ((typescript-mode . prettier-js-mode)
          (svelte-mode . prettier-js-mode))
   :config
@@ -765,7 +786,7 @@
 
 ;; Disabled arrow keys for habit building
 (bind-key* "<up>" 'ignore)
-(bind-key* "<d1own>" 'ignore)
+(bind-key* "<down>" 'ignore)
 (bind-key* "<left>" 'ignore)
 (bind-key* "<right>" 'ignore)
 
