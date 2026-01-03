@@ -14,7 +14,7 @@
 ;; Options
 
 (setq user-full-name "Evan Alvarez")
-(setq user-mail-address "lwq7e50ygv8f1w@tuta.com")
+(setq user-mail-address "evanalvarez@tuta.com")
 
 ;; Allow for shorter responses: "y" for yes and "n" for no.
 (setq read-answer-short t)
