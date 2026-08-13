@@ -1,0 +1,160 @@
+format = """
+$username\
+$directory\
+$git_branch\
+$git_status\
+$package\
+$kubernetes\
+$terraform\
+$direnv\
+$c\
+$cpp\
+$golang\
+$java\
+$nodejs\
+$php\
+$python\
+$ruby\
+$rust\
+$docker_context\
+$shlvl\
+$status\
+$character"""
+
+right_format = """
+$cmd_duration\
+$time"""
+
+command_timeout = 3000
+scan_timeout = 10
+
+[username]
+show_always = true
+style_user = "bg:#98971a fg:#282828"
+style_root = "bg:#fb4934 fg:#282828"
+format = '[](fg:#98971a)[ $user ]($style)[ ](fg:#98971a)'
+
+[directory]
+style = "bg:#3c3836 fg:#ebdbb2"
+format = '[](fg:#3c3836)[ $path ]($style)[ ](fg:#3c3836)'
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:#3c3836 fg:#b8bb26"
+format = '[](fg:#3c3836)[ $symbol $branch ]($style)[ ](fg:#3c3836)'
+
+[git_status]
+style = "bg:#3c3836 fg:#fb4934"
+format = '[](fg:#3c3836)[ $all_status$ahead_behind ]($style)[ ](fg:#3c3836)'
+ignore_submodules = true
+
+[package]
+symbol = ""
+style = "bg:#fe8019 fg:#282828"
+format = '[](fg:#fe8019)[ $symbol ($version) ]($style)[ ](fg:#fe8019)'
+
+[kubernetes]
+disabled = false
+symbol = ""
+style = "bg:#458588 fg:#282828"
+format = '[](fg:#458588)[ $symbol $context( \($namespace\)) ]($style)[ ](fg:#458588)'
+detect_files = [
+    "Chart.yaml",
+    "Chart.yml",
+    "kustomization.yaml",
+    "kustomization.yml",
+]
+detect_folders = ["k8s", "kubernetes", ".kube"]
+
+[terraform]
+symbol = ""
+style = "bg:#928374 fg:#282828"
+format = '[](fg:#928374)[ $symbol $workspace ]($style)[ ](fg:#928374)'
+
+#[direnv]
+#disabled = false
+#symbol = ""
+#style = "bg:#a89984 fg:#282828"
+#format = '[](fg:#a89984)[ $symbol $loaded/$allowed ]($style)[ ](fg:#a89984)'
+
+[c]
+symbol = ""
+style = "bg:#458588 fg:#282828"
+format = '[](fg:#458588)[ $symbol ($version) ]($style)[ ](fg:#458588)'
+
+[cpp]
+symbol = ""
+style = "bg:#83a598 fg:#282828"
+format = '[](fg:#83a598)[ $symbol ($version) ]($style)[ ](fg:#83a598)'
+
+[golang]
+symbol = ""
+style = "bg:#8ec07c fg:#282828"
+format = '[](fg:#8ec07c)[ $symbol ($version) ]($style)[ ](fg:#8ec07c)'
+
+[java]
+symbol = ""
+style = "bg:#fb4934 fg:#282828"
+format = '[](fg:#fb4934)[ $symbol ($version) ]($style)[ ](fg:#fb4934)'
+
+[nodejs]
+symbol = ""
+style = "bg:#fabd2f fg:#282828"
+format = '[](fg:#fabd2f)[ $symbol ($version) ]($style)[ ](fg:#fabd2f)'
+
+[php]
+symbol = ""
+style = "bg:#d3869b fg:#282828"
+format = '[](fg:#d3869b)[ $symbol ($version) ]($style)[ ](fg:#d3869b)'
+
+[python]
+symbol = ""
+style = "bg:#fabd2f fg:#458588"
+format = '[](fg:#fabd2f)[ $symbol ($version) ]($style)[ ](fg:#fabd2f)'
+detect_extensions = []
+detect_files = []
+
+[ruby]
+symbol = ""
+style = "bg:#cc241d fg:#282828"
+format = '[](fg:#cc241d)[ $symbol ($version) ]($style)[ ](fg:#cc241d)'
+
+[rust]
+symbol = ""
+style = "bg:#fe8019 fg:#282828"
+format = '[](fg:#fe8019)[ $symbol ($version) ]($style)[ ](fg:#fe8019)'
+
+[docker_context]
+symbol = ""
+style = "bg:#83a598 fg:#282828"
+format = '[](fg:#83a598)[ $symbol $context ]($style)[ ](fg:#83a598)'
+
+[shlvl]
+disabled = false
+threshold = 2
+symbol = ""
+style = "bg:#665c54 fg:#ebdbb2"
+format = '[](fg:#665c54)[ $symbol $shlvl ]($style)[ ](fg:#665c54)'
+
+[status]
+disabled = false
+symbol = ""
+style = "bg:#3c3836 fg:#fb4934"
+format = '[](fg:#3c3836)[ $symbol $status ]($style)[ ](fg:#3c3836)'
+
+[cmd_duration]
+min_time = 2000
+style = "fg:#d3869b"
+format = '[ $duration ]($style)'
+
+[time]
+disabled = false
+style = "fg:#a89984"
+format = '[ $time]($style)'
+time_format = "%R"
+
+[character]
+success_symbol = "[❯](bold #b8bb26)"
+error_symbol = "[❯](bold #fb4934)"

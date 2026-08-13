@@ -1,0 +1,16 @@
+[core]
+	untrackedCache = true
+	fsmonitor = true
+	compression = 6
+	preloadindex = true
+[pack]
+	threads = 0
+[gc]
+	auto = 256
+[user]
+	name = Evan Alvarez
+	email = evanalvarez@tutamail.com
+[init]
+	defaultBranch = master
+[pull]
+	rebase = false

@@ -1,0 +1,188 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "debugger": {
+    "button": true
+  },
+  "disable_ai": true,
+  "restore_on_startup": "launchpad",
+  "redact_private_values": true,
+  "code_lens": "menu",
+  "active_pane_modifiers": {
+    "inactive_opacity": 0.8
+  },
+  "focus_follows_mouse": {
+    "debounce_ms": 25,
+    "enabled": true
+  },
+  "minimum_contrast_for_highlights": 45.0,
+  "ui_font_family": ".SystemUIFont",
+  "ui_font_fallbacks": [
+    "Liga SFMono Nerd Font"
+  ],
+  "completions": {
+    "words_min_length": 3
+  },
+  "colorize_brackets": false,
+  "gutter": {
+    "min_line_number_digits": 3,
+    "line_numbers": true
+  },
+  "completion_menu_item_kind": "symbol",
+  "show_signature_help_after_edits": false,
+  "edit_predictions": {
+    "provider": "zed",
+    "allow_data_collection": "no"
+  },
+  "show_edit_predictions": false,
+  "diagnostics": {
+    "inline": {
+      "update_debounce_ms": 50,
+      "enabled": true
+    }
+  },
+  "document_folding_ranges": "on",
+  "prettier": {
+    "parser": "",
+    "allowed": false
+  },
+  "semantic_tokens": "combined",
+  "proxy": "",
+  "languages": {
+    "Markdown": {
+      "soft_wrap": "prefer_line"
+    }
+  },
+  "preferred_line_length": 80,
+  "title_bar": {
+    "show_user_menu": false,
+    "show_sign_in": false,
+    "show_user_picture": false,
+    "show_onboarding_banner": false,
+    "show_branch_name": true,
+    "show_project_items": true,
+    "show_menus": false
+  },
+  "use_system_window_tabs": true,
+  "tabs": {
+    "git_status": true,
+    "file_icons": true,
+    "show_diagnostics": "errors"
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false,
+    "show": true
+  },
+  "search": {
+    "button": true,
+    "regex": true
+  },
+  "use_smartcase_search": true,
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
+  "outline_panel": {
+    "dock": "left",
+    "button": false
+  },
+  "git_panel": {
+    "collapse_untracked_diff": true,
+    "show_count_badge": true,
+    "diff_stats": true,
+    "file_icons": true,
+    "tree_view": true,
+    "dock": "right"
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+  "agent": {
+    "enable_feedback": false,
+    "dock": "right",
+    "button": false,
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "project_panel": {
+    "indent_size": 16.0,
+    "dock": "left",
+    "default_width": 200.0,
+    "git_status_indicator": true
+  },
+  "collaboration_panel": {
+    "dock": "left",
+    "button": false
+  },
+  "terminal": {
+    "font_family": "Liga SFMono Nerd Font",
+    "button": true,
+    "option_as_meta": true,
+    "scrollbar": {
+      "show": "system"
+    }
+  },
+  "format_on_save": "on",
+  "autosave": "on_focus_change",
+  "toolbar": {
+    "breadcrumbs": true,
+    "selections_menu": true,
+    "quick_actions": false,
+    "code_actions": true
+  },
+  "scrollbar": {
+    "cursors": false,
+    "show": "auto"
+  },
+  "hover_popover_hiding_delay": 200,
+  "hover_popover_delay": 200,
+  "vertical_scroll_margin": 3.0,
+  "scroll_beyond_last_line": "vertical_scroll_margin",
+  "which_key": {
+    "delay_ms": 250,
+    "enabled": true
+  },
+  "cursor_shape": "block",
+  "cursor_blink": false,
+  "buffer_font_family": "Liga SFMono Nerd Font",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Colored Zed Icons Theme Light",
+    "dark": "Colored Zed Icons Theme Dark"
+  },
+  "base_keymap": "Emacs",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true,
+    },
+  },
+  "status_bar": {
+    "cursor_position_button": true,
+    "show_active_file": false,
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "file_finder": {
+    "modal_max_width": "medium",
+  },
+  "theme": {
+    "mode": "system",
+    "light": "Gruvbox Modern Light",
+    "dark": "Gruvbox Modern Dark",
+  },
+}

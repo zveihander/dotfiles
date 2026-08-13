@@ -1,0 +1,133 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-n": "editor::MoveToEndOfParagraph"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-down": "editor::MoveToEndOfParagraph"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-p": "editor::MoveToStartOfParagraph"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-up": "editor::MoveToStartOfParagraph"
+    }
+  },
+  {
+    "context": "Editor && selection_mode",
+    "bindings": {
+      "alt-shift-n": "editor::SelectToEndOfParagraph"
+    }
+  },
+  {
+    "context": "Editor && selection_mode",
+    "unbind": {
+      "ctrl-down": "editor::SelectToEndOfParagraph"
+    }
+  },
+  {
+    "context": "Editor && selection_mode",
+    "bindings": {
+      "alt-shift-p": "editor::SelectToStartOfParagraph"
+    }
+  },
+  {
+    "context": "Editor && selection_mode",
+    "unbind": {
+      "ctrl-up": "editor::SelectToStartOfParagraph"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-,": "editor::DuplicateLineDown"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-shift-p": "editor::SelectUp"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-p": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-n": "editor::MoveLineDown"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-down": "editor::MoveLineDown"
+    }
+  },
+  {
+    "context": "Picker > Editor",
+    "bindings": {
+      "enter": "picker::ConfirmCompletion"
+    }
+  },
+  {
+    "context": "Picker > Editor",
+    "unbind": {
+      "tab": "picker::ConfirmCompletion"
+    }
+  },
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "tab": "editor::ContextMenuNext",
+      "shift-tab": "editor::ContextMenuPrevious",
+      "enter": "editor::ConfirmCompletion"
+    }
+  },
+  {
+    "context": "Picker > Editor",
+    "bindings": {
+      "tab": "menu::SelectNext",
+      "shift-tab": "menu::SelectPrevious"
+    }
+  },
+  {
+    "context": "Editor && selection_mode",
+    "bindings": {
+      "alt-n": "editor::SelectToEndOfParagraph",
+      "alt-p": "editor::SelectToStartOfParagraph"
+    }
+  }
+]

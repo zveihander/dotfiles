@@ -1,0 +1,7 @@
+\.stowrc
+\.stow-global-ignore
+\.DS_Store
+\.git
+\.gitignore
+README.*
+LICENSE
