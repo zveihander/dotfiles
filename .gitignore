@@ -3,9 +3,6 @@
 *.log
 *.bak.*
 
-\.Git
-README.*
-LICENSE
 **/*.key
 **/*.pem
 **/id_rsa*

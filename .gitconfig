@@ -14,3 +14,5 @@
 	defaultBranch = master
 [pull]
 	rebase = false
+[maintenance]
+	repo = /Users/evan/dotfiles
